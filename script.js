@@ -41,6 +41,16 @@ fs.createReadStream('templates/responsive-twocolumn.asp').pipe(fs.createWriteStr
     var regexTitle = /<title>.*<\/title>/;
     var origFileTitle = cont.match(regexTitle)[0];
 
+    if(result.colNum === '2'){
+      var origCurrIds = [];
+      origCurrIds[0] = cont.match(/var currId.*?;/)[0];
+      origCurrIds[1] = cont.match(/var showTree.*?;/)[0];
+      if(cont.match(/var showTree2.*?;/)){
+        origCurrIds[2] = cont.match(/var showTree2.*?;/)[0];
+      }
+    }
+
+
     //var regexBread = /<div class="breadcrumb">[\s\S]*<\/div>/;
     //var origFileBread = cont.match(regexBread)[0];
 
@@ -78,6 +88,32 @@ fs.createReadStream('templates/responsive-twocolumn.asp').pipe(fs.createWriteStr
         silent: true,
       });
 
+if(result.colNum === '2'){
+      replace({
+        regex: /var currId.*?;/,
+        replacement: origCurrIds[0],
+        paths: [`converted/${fileToConvert}.asp`],
+        recursive: true,
+        silent: true,
+      });
+
+      replace({
+        regex: /var showTree.*?;/,
+        replacement: origCurrIds[1],
+        paths: [`converted/${fileToConvert}.asp`],
+        recursive: true,
+        silent: true,
+      });
+    if(cont.match(/var showTree2.*?;/)){
+      replace({
+        regex: /var showTree2.*?;/,
+        replacement: origCurrIds[2],
+        paths: [`converted/${fileToConvert}.asp`],
+        recursive: true,
+        silent: true,
+      });
+    }
+}
       //replace({
       //  regex: '<div class="breadcrumb"> <a href="/bullying/">Home</a> /</div>',
       //  replacement: origFileBread,
@@ -128,7 +164,7 @@ fs.createReadStream('templates/responsive-twocolumn.asp').pipe(fs.createWriteStr
       });
 
       replace({
-        regex: '<img src="/',
+        regex: /<img.*? src="\//,
         replacement: '<img src="http://staging.pacer.org/',
         paths: [`converted/${fileToConvert}.html`],
         recursive: true,
