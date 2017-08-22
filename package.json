@@ -1,0 +1,16 @@
+{
+  "name": "ikjh",
+  "version": "1.0.0",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "description": "",
+  "dependencies": {
+    "prompt": "^1.0.0",
+    "replace": "^0.3.0"
+  }
+}
